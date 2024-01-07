@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 builder.ConfigureDb();
 builder.ConfigureRepositories();
 builder.ConfigureServices();
+builder.ConfigureFilters();
 
 var app = builder.Build();
 app.UseGlobalExceptionHandler(app.Environment, app.Services.GetRequiredService<ILoggerFactory>());

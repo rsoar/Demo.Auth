@@ -2,19 +2,24 @@
 using Stateless.Auth.API.Core.Exceptions;
 using Stateless.Auth.API.Core.Interfaces;
 using Stateless.Auth.API.Presentation.DTOs.Request;
+using Stateless.Auth.API.Shared.Notification;
 
 namespace Stateless.Auth.API.Core.Services
 {
-    public class IdentityService : IIdentityService
+    public class IdentityService : AbstractService, IIdentityService
     {
         private readonly ITokenService _tokenSvc;
         private readonly IUserRepository _userRepository;
+        private NotificationContext _notificationContext;
 
-        public IdentityService(ITokenService tokenService, IUserRepository userRepository)
+        public IdentityService(
+            ITokenService tokenService,
+            IUserRepository userRepository,
+            NotificationContext notificationContext) : base(notificationContext)
         {
             _tokenSvc = tokenService;
             _userRepository = userRepository;
-
+            _notificationContext = notificationContext;
         }
 
         private bool ValidatePassword(string raw, string password)
@@ -32,9 +37,19 @@ namespace Stateless.Auth.API.Core.Services
             return new(_tokenSvc.CreateAccessToken(user));
         }
 
-        public AccessTokenDto Register(SignUpDto dto)
+        public AccessTokenDto? Register(SignUpDto dto)
         {
-            throw new NotImplementedException();
+            User newUser = new(dto.Username, dto.Email, dto.Password);
+
+            if (newUser.Valid)
+            {
+                _userRepository.Create(newUser);
+                return new(_tokenSvc.CreateAccessToken(newUser));
+            }
+
+            _notificationContext.AddNotifications(newUser.NotificationContext);
+
+            return null;
         }
     }
 }

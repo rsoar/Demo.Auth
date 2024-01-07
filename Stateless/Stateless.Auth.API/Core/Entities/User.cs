@@ -1,4 +1,6 @@
 ﻿using Stateless.Auth.API.Core.Entities;
+using Stateless.Auth.API.Core.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stateless.Auth.API.Core.Domain
 {
@@ -11,11 +13,16 @@ namespace Stateless.Auth.API.Core.Domain
             UserName = username;
             Email = email;
             Password = password;
+
+            Validate(this, new UserValidator());
         }
 
-        public Guid ExtId { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
+        public Guid ExtId { get; internal set; }
+        [Required]
+        public string UserName { get; internal set;}
+        [Required]
+        public string Email { get; internal set;}
+        [Required]
         public string Password { get; set; }
     }
 }
