@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stateless.Auth.API", "Stateless.Auth.API.csproj", "{39B13687-906F-48A4-9440-F416FA41320D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stateless.Auth.API", "Stateless.Auth.API.csproj", "{39B13687-906F-48A4-9440-F416FA41320D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stateless.Other.API", "..\Stateless.Other.API\Stateless.Other.API.csproj", "{A9C4BE62-7CB1-46EB-A15D-51235EEAF2B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{39B13687-906F-48A4-9440-F416FA41320D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39B13687-906F-48A4-9440-F416FA41320D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39B13687-906F-48A4-9440-F416FA41320D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9C4BE62-7CB1-46EB-A15D-51235EEAF2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9C4BE62-7CB1-46EB-A15D-51235EEAF2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9C4BE62-7CB1-46EB-A15D-51235EEAF2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9C4BE62-7CB1-46EB-A15D-51235EEAF2B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
