@@ -10,7 +10,7 @@ namespace Stateless.Auth.API.Core.Domain
         public User(string username, string email, string password)
         {
             ExtId = Guid.NewGuid();
-            UserName = username;
+            Username = username;
             Email = email;
             Password = password;
 
@@ -19,7 +19,7 @@ namespace Stateless.Auth.API.Core.Domain
 
         public Guid ExtId { get; internal set; }
         [Required]
-        public string UserName { get; internal set;}
+        public string Username { get; internal set;}
         [Required]
         public string Email { get; internal set;}
         [Required]

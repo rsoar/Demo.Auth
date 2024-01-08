@@ -32,7 +32,7 @@ namespace Stateless.Auth.API.Core.Validators
 
         public void Validate(User model, NotificationContext notificationContext)
         {
-            bool usernameValid = IsUsernameValid(model.UserName);
+            bool usernameValid = IsUsernameValid(model.Username);
             bool emailValid = IsEmailValid(model.Email);
             bool passwordValid = IsPasswordValid(model.Password);
 

@@ -29,7 +29,7 @@ namespace Stateless.Auth.API.Core.Services
 
         public AccessTokenDto SignIn(SignInDto dto)
         {
-            User user = _userRepository.FindUserByUsernameOrThrow(dto.Username, new ValidationException(StatusCodes.Status400BadRequest, "Invalid Credentials"));
+            User user = _userRepository.FindUserByUsernameOrThrow(dto.Username, new ValidationException(StatusCodes.Status400BadRequest, "Invalid credentials"));
 
             if (ValidatePassword(dto.Password, user.Password) is false)
                 throw new ValidationException(StatusCodes.Status400BadRequest, "Invalid credentials");
@@ -43,7 +43,15 @@ namespace Stateless.Auth.API.Core.Services
 
             if (newUser.Valid)
             {
+                if(_userRepository.FindUserByUsername(dto.Username) != null)
+                    throw new ValidationException(StatusCodes.Status409Conflict, "This username is already in use.");
+
+                if (_userRepository.FindUserByEmail(dto.Email) != null)
+                    throw new ValidationException(StatusCodes.Status409Conflict, "This email is already in use.");
+
+                newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
                 _userRepository.Create(newUser);
+
                 return new(_tokenSvc.CreateAccessToken(newUser));
             }
 

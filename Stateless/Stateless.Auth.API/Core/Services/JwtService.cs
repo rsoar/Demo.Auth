@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Stateless.Auth.API.Core.Domain;
+using Stateless.Auth.API.Core.Exceptions;
 using Stateless.Auth.API.Core.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 
@@ -32,7 +32,7 @@ namespace Stateless.Auth.API.Core.Services
                 Claim[] claims = new[]
                 {
                     new Claim("idt", user.ExtId.ToString()),
-                    new Claim("username", user.UserName)
+                    new Claim("username", user.Username)
                 };
 
                 JwtSecurityToken token = new(
@@ -55,7 +55,7 @@ namespace Stateless.Auth.API.Core.Services
         public bool ValidateAccessToken(string t)
         {
             if (string.IsNullOrWhiteSpace(t))
-                throw new AuthenticationException("The access token was not informed.");
+                throw new ValidationException(StatusCodes.Status401Unauthorized, "The access token was not informed.");
 
             JwtSecurityTokenHandler jwtHandler = new();
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]);
@@ -76,7 +76,7 @@ namespace Stateless.Auth.API.Core.Services
             }
             catch
             {
-                throw new AuthenticationException("The provided access token is invalid.");
+                throw new ValidationException(StatusCodes.Status401Unauthorized, "The provided access token is invalid.");
             }
         }
     }

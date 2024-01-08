@@ -29,6 +29,7 @@ namespace Stateless.Auth.API.Infrastructure.Extensions
 
                         if (excHandler.Error is ValidationException valExc)
                         {
+                            context.Response.StatusCode = valExc.StatusCode;
                             result.StatusCode = valExc.StatusCode;
                             result.Message = valExc.Message;
 
@@ -39,8 +40,7 @@ namespace Stateless.Auth.API.Infrastructure.Extensions
 
                             logger.LogError($"ValidationException was thrown: \n{result}");
                         }
-
-                        if (excHandler.Error is Exception unexpectedExc)
+                        else if (excHandler.Error is Exception unexpectedExc)
                         {
                             result.StatusCode = StatusCodes.Status500InternalServerError;
                             result.Message = unexpectedExc.Message;

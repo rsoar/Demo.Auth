@@ -21,9 +21,9 @@ namespace Stateless.Auth.API.Presentation.Controllers
         }
 
         [HttpPost("validate")]
-        public IActionResult Validate([FromServices] ITokenService svc, [FromBody] AccessTokenDto dto)
+        public IActionResult Validate([FromServices] ITokenService svc, [FromHeader] string access_token)
         {
-            return Ok(svc.ValidateAccessToken(dto.Access_token));
+            return Ok(svc.ValidateAccessToken(access_token));
         }
     }
 }
